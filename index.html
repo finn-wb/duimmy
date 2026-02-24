@@ -26,13 +26,16 @@
                 type: "LiveStream",
                 target: document.querySelector('#scanner'),
                 constraints: {
-                    facingMode: "environment"
+                    facingMode: "environment",
+                    width: { min: 1280 },
+                    height: { min: 720 }
                 }
             },
             locator: {
-                patchSize: "medium",
-                halfSample: true
+                patchSize: "large",
+                halfSample: false
             },
+            frequency: 30,
             decoder: {
                 readers: [
                     "code_128_reader",   // ✅ Code 128
