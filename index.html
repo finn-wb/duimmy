@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+</head>
+<body>
+
+<input type="text" id="scannedCode" placeholder="Scanned code will appear here">
+<button id="startScanner">Scan QR/Barcode</button>
+
+<script>
+    document.getElementById('startScanner').addEventListener('click', async () => {
+        const codeReader = new ZXing.BrowserQRCodeReader();
+        try {
+            const result = await codeReader.decodeFromVideoDevice(
+                undefined,
+                document.getElementById('scannedCode'),
+                (result, error) => {
+                    if (result) {
+                        document.getElementById('scannedCode').value = result.getText();
+                        codeReader.reset();
+                    }
+                    if (error && !(error instanceof ZXing.NotFoundException)) {
+                        console.error(error);
+                    }
+                }
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    });
+</script>
+
+</body>
+</html>
